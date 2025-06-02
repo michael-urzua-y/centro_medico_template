@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro Médico - Acceso</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Enlace al CSS externo -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+            <div class="mx-auto w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mb-4 pulse">
+                <i class="fas fa-heartbeat text-blue-500 text-4xl"></i>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-800">Centro Médico Salud Integral MONAY</h1>
+            <p class="text-gray-600 mt-2">Acceso al sistema de gestión médica</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-xl overflow-hidden form-container">
+            <div class="relative h-96 form-flip">
+                <!-- Formulario de Login -->
+                <div class="form-front p-8">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Iniciar Sesión</h2>
+                    
+                    <form id="loginForm" action="{{ url_for('login') }}" method="POST" class="space-y-4">
+                        <div>
+                            <label for="loginEmail" class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-envelope text-gray-400"></i>
+                                </div>
+                                <input type="email" id="loginEmail" name="loginEmail" class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="usuario@dominio.com" required>
+                            </div>
+                            <p id="loginEmailError" class="mt-1 text-sm text-red-600 hidden"></p>
+                        </div>
+                        
+                        <div>
+                            <label for="loginPassword" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-lock text-gray-400"></i>
+                                </div>
+                                <input type="password" id="loginPassword" name="loginPassword" class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="••••••••" required>
+                                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center toggle-password" data-target="loginPassword">
+                                    <i class="fas fa-eye text-gray-400 hover:text-gray-600"></i>
+                                </button>
+                            </div>
+                            <p id="loginPasswordError" class="mt-1 text-sm text-red-600 hidden"></p>
+                        </div>
+                        
+                        <!-- <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <input id="rememberMe" name="rememberMe" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                <label for="rememberMe" class="ml-2 block text-sm text-gray-700">Recordarme</label>
+                            </div>
+                            <a href="#" class="text-sm text-blue-600 hover:text-blue-500">¿Olvidó su contraseña?</a>
+                        </div> -->
+                        
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center">
+                            <i class="fas fa-sign-in-alt mr-2"></i> Ingresar
+                        </button>
+                    </form>
+                    
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-600">¿No tienes una cuenta? 
+                            <button id="showRegister" class="text-blue-600 hover:text-blue-500 font-medium">Regístrate</button>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Formulario de Registro -->
+                <div class="form-back p-8">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Registro de Personal</h2>
+                    
+                    <form id="registerForm" action="{{ url_for('register') }}" method="POST" class="space-y-4">
+                        <div>
+                            <label for="registerNombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-user text-gray-400"></i>
+                                </div>
+                                <input type="text" id="registerNombre" name="registerNombre" class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Juan Pérez" required>
+                            </div>
+                            <p id="registerNombreError" class="mt-1 text-sm text-red-600 hidden"></p>
+                        </div>
+                        
+                        <div>
+                            <label for="registerEmail" class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-envelope text-gray-400"></i>
+                                </div>
+                                <input type="email" id="registerEmail" name="registerEmail" class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="usuario@dominio.com" required>
+                            </div>
+                            <p id="registerEmailError" class="mt-1 text-sm text-red-600 hidden"></p>
+                        </div>
+
+                        <div>
+                            <label for="registerPassword" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-lock text-gray-400"></i>
+                                </div>
+                                <input type="password" id="registerPassword" name="registerPassword" class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="••••••••" required>
+                                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center toggle-password" data-target="registerPassword">
+                                    <i class="fas fa-eye text-gray-400 hover:text-gray-600"></i>
+                                </button>
+                            </div>
+                            <p id="registerPasswordError" class="mt-1 text-sm text-red-600 hidden"></p>
+                        </div>
+                        
+                        <div>
+                            <label for="registerRol" class="block text-sm font-medium text-gray-700 mb-1">Rol</label>
+                            <select id="registerRol" name="registerRol" class="w-full py-2 px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                               <option value="medico">Médico</option>
+                                <option value="paciente">Paciente</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center">
+                            <i class="fas fa-user-plus mr-2"></i> Registrar
+                        </button>
+                    </form>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-600">¿Ya tienes una cuenta? 
+                            <button id="showLogin" class="text-blue-600 hover:text-blue-500 font-medium">Inicia sesión</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div id="flash-messages" class="fixed top-4 right-4 z-50 space-y-2">
+                {% for category, message in messages %}
+                    <div class="flash-message px-6 py-3 rounded-lg shadow-lg text-white 
+                                {% if category == 'error' %}bg-red-500{% else %}bg-green-500{% endif %}"
+                        data-timeout="5000">  <!-- 5000ms = 5 segundos -->
+                        {{ message }}
+                        <button class="ml-4 float-right" onclick="this.parentElement.remove()">
+                            &times;
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <!-- Mensajes Flash con auto-ocultamiento -->
+</body>
+
+</html>
